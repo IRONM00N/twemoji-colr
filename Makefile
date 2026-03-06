@@ -36,6 +36,8 @@ $(FINAL_TARGET) : $(RAW_FONT) $(OT_SOURCE)
 	$(TTX) -m $(RAW_FONT) -o $(RAW_FONT_TEMPORARY) $(RAW_FONT).names
 	$(PYTHON) fixDirection.py $(RAW_FONT_TEMPORARY)
 	$(TTX) -m $(RAW_FONT_TEMPORARY) -o $(FINAL_TARGET) $(OT_SOURCE)
+	# fix font metrics for proper rendering in terminal emulators
+	$(PYTHON) fixMetrics.py $(FINAL_TARGET)
 
 $(RAW_FONT) : $(CODEPOINTS) $(GRUNTFILE)
 	$(NPM) run grunt webfont
